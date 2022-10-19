@@ -22,7 +22,7 @@ $ npm start
 Instalacija dodatnih paketa za frontend:
 
 ```console
-$ npm install react-router-dom react-bootstrap axios
+$ npm install react-router-dom bootstrap axios
 ```
 
 Instalacija dodatnih paketa za backend:
