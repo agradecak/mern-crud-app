@@ -30,3 +30,17 @@ Instalacija dodatnih paketa za backend:
 ```console
 $ npm install body-parser cors express mongoose 
 ```
+
+## Pokretanje MongoDB
+
+Pokretanje servera (CMD as admin):
+
+```console
+$ mongod
+```
+
+Povezivanje preko shella:
+
+```console
+$ mongosh
+```
