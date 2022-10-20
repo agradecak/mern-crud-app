@@ -6,32 +6,52 @@ Aplikacija za pregled, dodavanje, uređivanje i brisanje mušterija.
 
 ## Inicijalizacija
 
+### Frontend
+
 Inicijalizacija React appa:
 
 ```console
-$ npx create-react-app mern-todo-app
+$ npx create-react-app frontend
 ```
 
-Pokretanje aplikacije:
+Inicijalizacija i instalacija paketa:
 
 ```console
-$ cd mern-crud-app
-$ npm start
-```
-
-Instalacija dodatnih paketa za frontend:
-
-```console
+$ cd frontend
+$ npm init -y
 $ npm install react-router-dom bootstrap axios
 ```
 
-Instalacija dodatnih paketa za backend:
+Pokretanje:
 
 ```console
+$ npm start
+```
+
+### Bakcned
+
+Inicijalizacija backenda:
+
+```console
+$ mkdir backend
+```
+
+Inicijalizacija i instalacija paketa:
+
+```console
+$ cd backend
+$ npm init -y
+$ npm install -g nodemon
 $ npm install body-parser cors express mongoose 
 ```
 
-## Pokretanje MongoDB
+Pokretanje:
+
+```console
+$ nodemon server
+```
+
+## MongoDB
 
 Pokretanje servera (CMD as admin):
 
