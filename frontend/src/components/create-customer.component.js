@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class CreateCustomer extends Component {
   constructor(props) {
@@ -58,6 +59,17 @@ export default class CreateCustomer extends Component {
     console.log(`Customer Email: ${this.state.customer_email}`);
     console.log(`Customer City: ${this.state.customer_city}`);
     console.log(`Customer DOB: ${this.state.customer_dob}`);
+
+    const newCustomer = {
+      customer_name: this.state.customer_name,
+      customer_surname: this.state.customer_surname,
+      customer_email: this.state.customer_email,
+      customer_city: this.state.customer_city,
+      customer_dob: this.state.customer_dob
+    }
+
+    axios.post('http://localhost:4000/customers/add', newCustomer)
+      .then(res => console.log(res.data))
 
     this.setState({
       customer_name: '',
