@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 import axios from 'axios';
 
 const Customer = props => (
@@ -24,7 +25,12 @@ export default class CustomerList extends Component {
   componentDidMount() {
     axios.get('http://localhost:4000/customers/')
       .then(res => {
-        this.setState({customers: res.data })
+        let data = res.data
+        data.forEach(function(cust) {
+          if (cust.customer_dob)
+            cust.customer_dob = format(parseISO(cust.customer_dob), "dd/MM/yyyy") 
+      })
+        this.setState({ customers: data })
       })
       .catch(function(error) {
         console.log(error);

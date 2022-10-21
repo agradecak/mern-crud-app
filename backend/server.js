@@ -80,6 +80,8 @@ customerRoutes.route('/delete/:id').delete(function(req, res) {
     });
 });
 
+// customerRoutes.route('/calc-insurance/:')
+
 app.use('/customers', customerRoutes);
 
 app.listen(port, function() {

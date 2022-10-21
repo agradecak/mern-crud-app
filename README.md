@@ -19,7 +19,7 @@ Inicijalizacija i instalacija paketa:
 ```console
 $ cd frontend
 $ npm init -y
-$ npm install react-router-dom bootstrap axios
+$ npm install react-router-dom@4.3.1 bootstrap axios date-fns
 ```
 
 Pokretanje:

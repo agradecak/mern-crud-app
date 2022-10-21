@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -31,13 +31,13 @@ class App extends Component {
               </ul>
             </div>
           </nav>
+
           <br/>
-          <Routes>
-            <Route path="/" exact element={<CustomerList/>} />
-            <Route path="/details/:id" element={<CustomerDetails/>} />
-            <Route path="/create" element={<CreateCustomer/>} />
-            <Route path="/edit/:id" element={<EditCustomer/>} />
-          </Routes>
+
+          <Route path="/" exact component={CustomerList} />
+          <Route path="/details/:id" component={CustomerDetails} />
+          <Route path="/create" component={CreateCustomer} />
+          <Route path="/edit/:id" component={EditCustomer} />
         </div>
       </Router>
     );

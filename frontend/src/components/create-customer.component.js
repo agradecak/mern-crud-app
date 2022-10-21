@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 export default class CreateCustomer extends Component {
   constructor(props) {
@@ -17,7 +18,8 @@ export default class CreateCustomer extends Component {
       customer_surname: '',
       customer_email: '',
       customer_city: '',
-      customer_dob: ''
+      customer_dob: '',
+      is_submited: false
     }
   }
 
@@ -69,71 +71,81 @@ export default class CreateCustomer extends Component {
     }
 
     axios.post('http://localhost:4000/customers/add', newCustomer)
-      .then(res => console.log(res.data))
+      .then(res => {
+        console.log(res.data)
+        if (res.status === 200) {
+          this.setState({ is_submited: true });
+        }
+      });
 
-    this.setState({
-      customer_name: '',
-      customer_surname: '',
-      customer_email: '',
-      customer_city: '',
-      customer_dob: ''
-    })
+    // this.setState({
+    //   customer_name: '',
+    //   customer_surname: '',
+    //   customer_email: '',
+    //   customer_city: '',
+    //   customer_dob: ''
+    // })
+
   }
 
   render() {
-    return (
-      <div>
-        <h3 className="text-center">Create New Customer</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group m-3">
-            <div className="row">
-              <div className="form-group col-md-6">
-                <label>Name: </label>
-                <input  type="text"
-                        className="form-control"
-                        value={this.state.customer_name}
-                        onChange={this.onChangeCustomerName}
-                        />
-              </div>
-              <div className="form-group col-md-6">
-                <label>Surname: </label>
-                <input  type="text"
-                        className="form-control"
-                        value={this.state.customer_surname}
-                        onChange={this.onChangeCustomerSurname}
-                        />
+    if (this.state.is_submited) {
+      return <Redirect to={{ pathname: "/" }} />;
+    } else {
+      return (
+        <div className="m-auto" style={{ width: "60%"}}>
+          <h3 className="text-center">Create New Customer</h3>
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group m-3">
+              <div className="row">
+                <div className="form-group col-md-6">
+                  <label>Name: </label>
+                  <input  type="text"
+                          className="form-control"
+                          value={this.state.customer_name}
+                          onChange={this.onChangeCustomerName}
+                          />
+                </div>
+                <div className="form-group col-md-6">
+                  <label>Surname: </label>
+                  <input  type="text"
+                          className="form-control"
+                          value={this.state.customer_surname}
+                          onChange={this.onChangeCustomerSurname}
+                          />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="form-group m-3">
-            <label>Email: </label>
-            <input  type="text"
-                    className="form-control"
-                    value={this.state.customer_email}
-                    onChange={this.onChangeCustomerEmail}
-                    />
-          </div>
-          <div className="form-group m-3">
-            <label>City: </label>
-            <input  type="text"
-                    className="form-control"
-                    value={this.state.customer_city}
-                    onChange={this.onChangeCustomerCity}
-                    />
-          </div>
-          <div className="form-group m-3">
-            <label>Date of birth: </label>
-            <input  type="date"
-                    className="form-control"
-                    value={this.state.onChangeCustomerDob}
-                    onChange={this.onChangeCustomerDob}
-                    />
-          </div>
-          <div className="form-group m-3 text-center">
-            <input type="submit" value="Create Customer" className="btn text-light" style={{ backgroundColor: "#6A0098" }}/>
-          </div>
-        </form>
-      </div>
-    )
+            <div className="form-group m-3">
+              <label>Email: </label>
+              <input  type="text"
+                      className="form-control"
+                      value={this.state.customer_email}
+                      onChange={this.onChangeCustomerEmail}
+                      />
+            </div>
+            <div className="form-group m-3">
+              <label>City: </label>
+              <input  type="text"
+                      className="form-control"
+                      value={this.state.customer_city}
+                      onChange={this.onChangeCustomerCity}
+                      />
+            </div>
+            <div className="form-group m-3">
+              <label>Date of birth: </label>
+              <input  type="date"
+                      className="form-control"
+                      value={this.state.customer_dob}
+                      onChange={this.onChangeCustomerDob}
+                      />
+            </div>
+            <div className="form-group m-3 text-center">
+              <input type="submit" value="Create Customer" className="btn text-light" style={{ backgroundColor: "#6A0098" }}/>
+            </div>
+          </form>
+        </div>
+      )
+    }
   }
 }
