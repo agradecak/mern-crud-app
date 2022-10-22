@@ -42,7 +42,7 @@ Inicijalizacija i instalacija paketa:
 $ cd backend
 $ npm init -y
 $ npm install -g nodemon
-$ npm install body-parser cors express mongoose 
+$ npm install body-parser cors express mongoose date-fns
 ```
 
 Pokretanje:
