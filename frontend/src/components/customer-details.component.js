@@ -8,6 +8,7 @@ export default class CustomerDetails extends Component {
     super(props);
 
     this.onClickDelete = this.onClickDelete.bind(this);
+    this.onClickCalculateInsurance = this.onClickCalculateInsurance.bind(this);
 
     this.state = {
       customer_name: '',
@@ -39,8 +40,19 @@ export default class CustomerDetails extends Component {
       })
   }
 
-  // onClickCalculateInsurance(e) {
-  // }
+  onClickCalculateInsurance() {
+    let id = this.props.match.params.id;
+    axios.get('http://localhost:4000/customers/insurance/'+id)
+      .then(response => {
+        this.setState({
+          customer_insurance: response.data.customer_insurance,
+          customer_insurance_calculated: true
+        })
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+  }
 
   onClickDelete() {
     let id = this.props.match.params.id;
@@ -69,7 +81,7 @@ export default class CustomerDetails extends Component {
           <div className="d-flex">
             <h4>Insurance price:</h4>
               {this.state.customer_insurance_calculated ? (
-                <h4>{this.state.customer_insurance}</h4>
+                <h4>&nbsp;{this.state.customer_insurance}</h4>
               ) : (
                 <button onClick={this.onClickCalculateInsurance} className="btn text-light ms-3" style={{ backgroundColor: "#6A0098" }}>
                   Calculate Insurance

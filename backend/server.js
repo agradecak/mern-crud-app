@@ -3,8 +3,11 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const dateFns = require('date-fns');
 const customerRoutes = express.Router();
 const port = 4000;
+const prices = require('./base_price.json');
+const discounts = require('./discount.json');
 
 let Customer = require('./customer.model');
 
@@ -29,8 +32,7 @@ customerRoutes.route('/').get(function(req, res) {
 });
 
 customerRoutes.route('/:id').get(function(req, res) {
-    let id = req.params.id;
-    Customer.findById(id, function(err, customer) {
+    Customer.findById(req.params.id, function(err, customer) {
         res.json(customer);
     });
 });
@@ -80,7 +82,42 @@ customerRoutes.route('/delete/:id').delete(function(req, res) {
     });
 });
 
-// customerRoutes.route('/calc-insurance/:')
+customerRoutes.route('/insurance/:id').get(function(req, res) {
+    Customer.findById(req.params.id, function(err, customer) {
+        if (!customer)
+            res.status(404).send("Data not found.")
+        else {
+            let custAge = dateFns.differenceInYears(new Date(), customer.customer_dob);
+            let custDiscountItem = discounts.find(function(item) {
+                let itemRange = item.age;
+                let itemMinMax = itemRange.split("-");
+                let itemMin = Number(itemMinMax[0]);
+                let itemMax = Number(itemMinMax[1]);
+                if (custAge >= itemMin && custAge < itemMax)
+                    return item;
+            });
+            let custDiscount = custDiscountItem.discount;
+            
+            let custCity= customer.customer_city;
+            let custCityLcase = custCity.toLowerCase();
+            let custPriceItem = prices.find(function(item) {
+                if (item.city == "other")
+                    return item;
+                else {
+                    let itemCity = item.city;
+                    let itemCityLcase = itemCity.toLowerCase();
+                    if (itemCityLcase === custCityLcase)
+                        return item;
+                }
+            });
+            let custPrice = custPriceItem.amount;
+
+            let insurance = custPrice  - (custPrice * (custDiscount/100));
+            res.json({"customer_insurance": insurance});
+        }
+    });
+});
+
 
 app.use('/customers', customerRoutes);
 
