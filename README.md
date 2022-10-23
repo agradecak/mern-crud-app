@@ -28,7 +28,7 @@ Pokretanje:
 $ npm start
 ```
 
-### Bakcned
+### Backend
 
 Inicijalizacija backenda:
 
